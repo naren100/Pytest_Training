@@ -1,0 +1,4 @@
+test_passing: "pytest -v ch1/test_one.py::test_passing"
+ch1_quiet: "pytest --tb=no ch1"
+test_files_quiet: "pytest --tb=no test_one.py test_two.py"
+test_two_verbose: "pytest -v test_two.py"

@@ -1,0 +1,80 @@
+from dataclasses import dataclass
+@dataclass
+class Book:
+    title: str
+    author: str
+    year: int
+
+# Provides these Key Features
+__init__
+__repr__
+__eq__
+
+
+Without DataClass:
+class Book:
+    def __init__(self, title: str, author: str, year: int):
+        self.title = title
+        self.author = author
+        self.year = year
+
+    def __repr__(self):
+        return f"Book(title={self.title!r}, author={self.author!r}, year={self.year!r})"
+
+    def __eq__(self, other):
+        if not isinstance(other, Book):
+            return NotImplemented
+        return (
+            self.title == other.title and
+            self.author == other.author and
+            self.year == other.year
+        )
+
+| **Pytest Syntax**         | **Unittest Equivalent**     | **Example**                                     |
+|---------------------------|------------------------------|----------------------------------------------- |
+| `assert something`        | `assertTrue(something)`      | `assert 5 > 3`                                 |
+| `assert not something`    | `assertFalse(something)`     | `assert not (2 > 3)`                           |
+| `assert a == b`           | `assertEqual(a, b)`          | `assert "hello".upper() == "HELLO"`            |
+| `assert a != b`           | `assertNotEqual(a, b)`       | `assert 4 != 5`                                |
+| `assert a is None`        | `assertIsNone(a)`            | `a = None; assert a is None`                   |
+| `assert a is not None`    | `assertIsNotNone(a)`         | `a = 10; assert a is not None`                 |
+| `assert a <= b`           | `assertLessEqual(a, b)`      | `assert 3 <= 5`                                |
+
+a = [1, 2]   # creates a new list object
+b = a        # points b to the *same* list as a
+c = [1, 2]   # creates a *new* list object with the same values
+
+Is a == c?
+a is c?
+a is b?
+
+print(id(a))?
+print(id(c))?
+
+# Given | When | Then                   - BDD
+# Arrange | Act | Assert                - Regular
+# Regardless of the names of the steps, the goal is the same: separate a test into stages.
+
+Run these Tests
+
+Running a single test method, test class, or module:
+$ pytest ch2/test_classes.py::TestEquality::test_equality
+$ pytest ch2/test_classes.py::TestEquality
+$ pytest ch2/test_classes.py
+
+Running a single test function or module:
+$ pytest ch2/test_card.py::test_defaults
+$ pytest ch2/test_card.py
+
+Running the Whole Directory:
+$ pytest ch2
+
+pytest -v -k TestEquality
+Here v means Verbose
+Here k means Run Tests that only match a certain substring
+
+pytest -v --tb=no -k "equality and not equality_fail"
+
+The keywords and, not, or, and parentheses are allowed to create complex expressions.
+Here’s a test run of all tests with “dict” or “ids” in the name, but not ones in the “TestEquality” class:
+$ pytest -v --tb=no -k "(dict or ids) and not TestEquality
